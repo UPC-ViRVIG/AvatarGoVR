@@ -1,0 +1,8 @@
+{
+    "name": "ViRVIG.AvatarGoVR.Editor",
+    "references": [
+		"ViRVIG.AvatarGoVR",
+		"Unity.Mathematics"
+    ],
+    "allowUnsafeCode": true
+}

@@ -1,0 +1,11 @@
+{
+    "name": "ViRVIG.AvatarGoVR",
+    "references": [
+        "Unity.Burst",
+		"Unity.Mathematics",
+		"Unity.InputSystem",
+		"Unity.XR.OpenXR",
+		"Unity.XR.CoreUtils"
+    ],
+    "allowUnsafeCode": true
+}
