@@ -1,8 +1,19 @@
 {
     "name": "ViRVIG.AvatarGoVR.Editor",
+    "rootNamespace": "",
     "references": [
-		"ViRVIG.AvatarGoVR",
-		"Unity.Mathematics"
+        "ViRVIG.AvatarGoVR",
+        "Unity.Mathematics"
     ],
-    "allowUnsafeCode": true
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
