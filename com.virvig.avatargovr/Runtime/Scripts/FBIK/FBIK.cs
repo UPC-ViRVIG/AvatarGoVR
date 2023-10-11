@@ -104,10 +104,10 @@ namespace FBIK
                 {
                     spineChain.Add(skeleton[i]);
                     initSpineChain.Add(initRotations[i]);
-                }
-                if (i > initSpineChainJoint)
-                {
-                    SpineLength += math.distance(skeleton[i - 1].position, skeleton[i].position);
+                    if (spineChain.Count > 1)
+                    {
+                        SpineLength += math.distance(spineChain[spineChain.Count - 2].position, spineChain[spineChain.Count - 1].position);
+                    }
                 }
             }
             Debug.Assert(spineChain.Count >= 2, "Spine chain must have at least 2 joints");
