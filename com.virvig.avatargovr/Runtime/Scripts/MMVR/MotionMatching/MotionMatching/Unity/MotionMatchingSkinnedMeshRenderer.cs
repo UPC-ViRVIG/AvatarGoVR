@@ -48,7 +48,7 @@ namespace MotionMatching
         public void Init()
         {
             // BindSkinnedMeshRenderers();
-            if (ShouldRetarget) InitRetargeting();
+            if (ShouldRetarget && SourceTPose == null) InitRetargeting();
         }
 
         private void InitRetargeting()

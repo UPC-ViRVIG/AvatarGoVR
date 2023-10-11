@@ -120,7 +120,6 @@ namespace AvatarGoVR
             {
                 MotionMatchingSkinnedMeshRenderer.MotionMatching = MotionMatchingController;
                 MotionMatchingSkinnedMeshRenderer.Enable();
-                MotionMatchingSkinnedMeshRenderer.Init();
             }
 
             float3 bodyOffset = new float3(0.0f, -0.15f, -0.15f);

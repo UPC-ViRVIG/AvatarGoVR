@@ -113,6 +113,9 @@ namespace AvatarGoVR
                 VRCharacterController.Init();
                 MotionMatchingController.CharacterController = VRCharacterController;
                 MotionMatchingController.Enable();
+                MotionMatchingSkinnedMeshRenderer.MotionMatching = MotionMatchingController;
+                MotionMatchingSkinnedMeshRenderer.Enable();
+                MotionMatchingSkinnedMeshRenderer.Init();
             }
 
             // Set every time because Motion Matching Skinned Mesh Renderer is a MonoBehaviour shared by different animation providers
@@ -121,7 +124,6 @@ namespace AvatarGoVR
             {
                 MotionMatchingSkinnedMeshRenderer.MotionMatching = MotionMatchingController;
                 MotionMatchingSkinnedMeshRenderer.Enable();
-                MotionMatchingSkinnedMeshRenderer.Init();
             }
 
             float3 bodyOffset = new float3(0.0f, -0.15f, -0.15f);
