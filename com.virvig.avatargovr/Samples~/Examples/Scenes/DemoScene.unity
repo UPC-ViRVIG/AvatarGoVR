@@ -964,6 +964,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1114675048}
     - target: {fileID: 114777982434440394, guid: 1c0a1103aa90aff45a648827e87681a5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114777982434440394, guid: 1c0a1103aa90aff45a648827e87681a5, type: 3}
       propertyPath: _reflectionScale
       value: 1
       objectReference: {fileID: 0}

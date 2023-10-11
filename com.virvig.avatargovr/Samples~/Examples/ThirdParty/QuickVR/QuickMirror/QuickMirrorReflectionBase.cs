@@ -53,6 +53,8 @@ namespace QuickVR
         [Range(1.0f, 2.0f)]
         public float _reflectionScale = 1.0f;
 
+        public Shader CopyTextureShader;
+
         #endregion
 
         #region PROTECTED PARAMETERS
@@ -122,8 +124,7 @@ namespace QuickVR
             CreateRenderTexture(ref _reflectionTextureRight, "__ReflectionTextureRight__");
             CreateRenderTexture(ref _reflectionTextureSinglePass, "__ReflectionTextureSingle__", single:true);
 
-            Shader shader = Shader.Find("Custom/CopyDualTextures");
-            CopyTexMat = new Material(shader);
+            CopyTexMat = new Material(CopyTextureShader);
 
             _oldReflectionQuality = _reflectionQuality;
         }
