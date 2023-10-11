@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: MotionMatchingData
   m_EditorClassIdentifier: 
   BVHs:
-  - {fileID: 4900000, guid: 297217b49660956478c95bcd186ead1d, type: 3}
-  BVHTPose: {fileID: 4900000, guid: df5df7929f5023e44af2f2bca170ae7b, type: 3}
+  - {fileID: 4900000, guid: ba590e09bf8f13e4993d360bdcc23b65, type: 3}
+  - {fileID: 4900000, guid: c71099d1f6cee884b808b47158842b22, type: 3}
+  BVHTPose: {fileID: 4900000, guid: 60c2cd7af41073342aec3a4dbbc63dc4, type: 3}
   UnitScale: 0.01
   HipsForwardLocalVector:
     x: 0

@@ -1,6 +1,6 @@
 {
   "name": "com.virvig.avatargovr",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "displayName": "AvatarGoVR",
   "description": "Virtual reality avatars animated from any configuration of devices.",
   "unity": "2020.1",
@@ -9,8 +9,8 @@
   "licensesUrl": "https://github.com/UPC-ViRVIG/AvatarGoVR#license",
   "keywords": [
     "animation",
-	"virtual reality",
-	"avatars"
+    "virtual reality",
+    "avatars"
   ],
   "author": {
     "name": "Jose Luis Ponton",
@@ -19,7 +19,7 @@
   "dependencies": {
     "com.unity.burst": "1.6.4",
     "com.unity.inputsystem": "1.3.0",
-	"com.unity.xr.interaction.toolkit": "2.2.0",
+    "com.unity.xr.interaction.toolkit": "2.2.0",
     "com.unity.xr.management": "4.2.1",
     "com.unity.xr.openxr": "1.6.0"
   },
