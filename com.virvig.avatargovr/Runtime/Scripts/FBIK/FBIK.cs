@@ -131,7 +131,9 @@ namespace FBIK
             //RotationChainIK.Solve(hipsTarget.Rotation, headTarget.Rotation, SpineChain, InitSpineChain, false, true);
             // Translate Spine
             float3 hipsTargetRight = math.mul(hipsTarget.Rotation, math.right());
+            float3 hipsTargetForward = math.mul(hipsTarget.Rotation, math.forward());
             CCD.Solve(headTargetPos, SpineChain, SpineWeights, hipsTargetRight);
+            CCD.Solve(headTargetPos, SpineChain, SpineWeights, hipsTargetForward);
             // Rotate Head (force always look at the target head)
             Head.rotation = math.mul(headTarget.Rotation, InitHead);
         }
