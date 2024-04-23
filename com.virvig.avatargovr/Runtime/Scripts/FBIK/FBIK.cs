@@ -52,11 +52,16 @@ namespace FBIK
         public void Solve(Target headTarget,
                           Target currentHips,
                           Target leftHandTarget,
-                          Target rightHandTarget)
+                          Target rightHandTarget,
+                          bool solveRoot=false)
         {
             Target hipsTarget = currentHips;
             hipsTarget.Rotation = math.mul(hipsTarget.Rotation, math.inverse(InitHips));
 
+            if (solveRoot)
+            {
+                SolveRoot(hipsTarget);
+            }
             SolveSpine(hipsTarget, headTarget);
             SolveArms(hipsTarget, leftHandTarget, rightHandTarget);
         }
@@ -113,7 +118,14 @@ namespace FBIK
             Debug.Assert(spineChain.Count >= 2, "Spine chain must have at least 2 joints");
             SpineChain = spineChain.ToArray();
             InitSpineChain = initSpineChain.ToArray();
-            SpineWeights = new float[endSpineChainJoint - initSpineChainJoint + 1] { 1.0f, 0.2f, 0.1f, 0.05f, 0.0f };
+            if (SpineChain.Length == 2)
+            {
+                SpineWeights = new float[2] { 1.0f, 0.0f };
+            }
+            else
+            {
+                SpineWeights = new float[endSpineChainJoint - initSpineChainJoint + 1] { 1.0f, 0.2f, 0.1f, 0.05f, 0.0f };
+            }
         }
         private void SolveSpine(Target hipsTarget, Target headTarget)
         {

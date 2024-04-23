@@ -92,10 +92,11 @@ namespace AvatarGoVR
             deviceManager.GetDevicePose(DeviceManager.DeviceRole.Head, out Vector3 headPos, out Quaternion headRot);
             deviceManager.GetDevicePose(DeviceManager.DeviceRole.LeftHand, out Vector3 lHandPos, out Quaternion lHandRot);
             deviceManager.GetDevicePose(DeviceManager.DeviceRole.RightHand, out Vector3 rHandPos, out Quaternion rHandRot);
-            FBIK.Solve(new Target(headPos, headRot),
+            FBIK.Solve(new Target(headPos, Quaternion.identity),
                        new Target(headPos - Vector3.up * distanceHeadHips, headRot),
                        new Target(lHandPos, lHandRot),
-                       new Target(rHandPos, rHandRot));
+                       new Target(rHandPos, rHandRot),
+                       solveRoot: true);
         }
 
         public void Dispose() { }
