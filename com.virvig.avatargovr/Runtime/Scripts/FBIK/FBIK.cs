@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -160,7 +158,7 @@ namespace FBIK
         private void SolveSpine(Target hipsTarget, Target headTarget)
         {
             float3 headTargetPos = CommonSolveSpine(hipsTarget, headTarget);
-            // Rotate Spine
+            // Rotate Spine with the Head
             //RotationChainIK.Solve(hipsTarget.Rotation, headTarget.Rotation, SpineChain, InitSpineChain, false, true);
             // Translate Spine
             float3 hipsTargetRight = math.mul(hipsTarget.Rotation, math.right());
@@ -180,15 +178,34 @@ namespace FBIK
             float leftFactor = math.clamp((headToLeftHand - HeadToLeftArmLength) / HeadToLeftArmLength, 0.0f, 1.0f) * maxPercentageHeadToArmLength;
             float rightFactor = math.clamp((headToRightHand - HeadToRightArmLength) / HeadToRightArmLength, 0.0f, 1.0f) * maxPercentageHeadToArmLength;
             headTargetPos = headTargetPos * (1.0f - leftFactor - rightFactor) + leftHandTarget.Position * leftFactor + rightHandTarget.Position * rightFactor;
-            // Rotate Spine
-            //RotationChainIK.Solve(hipsTarget.Rotation, headTarget.Rotation, SpineChain, InitSpineChain, false, true);
-            // Translate Spine
             float3 hipsTargetRight = math.mul(hipsTarget.Rotation, math.right());
+            float3 hipsTargetUp = math.mul(hipsTarget.Rotation, math.up());
             float3 hipsTargetForward = math.mul(hipsTarget.Rotation, math.forward());
+            RotateSpineToHands(hipsTarget, leftHandTarget.Position, rightHandTarget.Position, hipsTargetRight, hipsTargetUp, hipsTargetForward);
+            // Rotate Spine with the Head
+            // RotationChainIK.Solve(hipsTarget.Rotation, headTarget.Rotation, SpineChain, InitSpineChain, false, true);
+            // Translate Spine
             CCD.Solve(headTargetPos, SpineChain, SpineWeights, hipsTargetRight);
             CCD.Solve(headTargetPos, SpineChain, SpineWeights, hipsTargetForward);
             // Rotate Head (force always look at the target head)
             Head.rotation = math.mul(headTarget.Rotation, InitHead);
+        }
+
+        private void RotateSpineToHands(Target hipsTarget, float3 leftHandPos, float3 rightHandPos,
+                                        float3 hipsTargetRight, float3 hipsTargetUp, float3 hipsTargetForward)
+        {
+            const float maxRotDegrees = 120.0f;
+            Plane hipsPlaneZY = new Plane(hipsTargetRight, hipsTarget.Position);
+            float leftHandDist = hipsPlaneZY.GetDistanceToPoint(leftHandPos) + LeftArmLength * 0.3f;
+            float rightHandDist = -hipsPlaneZY.GetDistanceToPoint(rightHandPos) - RightArmLength * 0.3f;
+            float leftHandRot = math.clamp(leftHandDist / (LeftArmLength * 0.75f), 0.0f, 1.0f) * maxRotDegrees;
+            float rightHandRot = -(math.clamp(rightHandDist / (RightArmLength * 0.75f), 0.0f, 1.0f) * maxRotDegrees);
+            float3 forwardLeftHand = Vector3.ProjectOnPlane(leftHandPos - hipsTarget.Position, hipsTargetUp);
+            float3 forwardRightHand = Vector3.ProjectOnPlane(rightHandPos - hipsTarget.Position, hipsTargetUp);
+            float rot = leftHandRot * math.sign(math.dot(hipsTargetForward, forwardLeftHand)) +
+                        rightHandRot * math.sign(math.dot(hipsTargetForward, forwardRightHand));
+            quaternion targetRotation = math.mul(quaternion.AxisAngle(hipsTargetUp, math.radians(rot)), hipsTarget.Rotation);
+            RotationChainIK.Solve(hipsTarget.Rotation, targetRotation, SpineChain[2..], InitSpineChain[2..], false, true);
         }
 
         private void InitLegs(Transform[] skeleton, quaternion[] initRotations)
