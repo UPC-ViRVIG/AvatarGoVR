@@ -21,7 +21,7 @@ namespace AvatarGoVR
                 IsConnected = true;
             }
         }
-        
+
         private void OnDisable()
         {
             if (IsConnected && AvatarManager.Instance != null)

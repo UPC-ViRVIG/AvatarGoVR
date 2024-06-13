@@ -37,7 +37,7 @@ namespace AvatarGoVR
 
         public UnityEvent OnAvatarStartAnimation;
         public UnityEvent OnAvatarStopAnimation;
-        
+
 
         private DeviceManager DeviceManager;
         private List<IAnimationProvider> AnimationProviders;
@@ -47,7 +47,7 @@ namespace AvatarGoVR
         private Transform[] Skeleton;
         private HumanBodyBones[] Topology;
         private IAvatar AvatarComponent;
-        [HideInInspector] [SerializeField] private bool Verbose;
+        [HideInInspector][SerializeField] private bool Verbose;
         private bool HasCalibrationStarted;
         private Canvas TextCanvas;
         private Text Text;
@@ -90,7 +90,14 @@ namespace AvatarGoVR
                 Text.transform.localPosition = Vector3.zero;
                 Text.transform.localRotation = Quaternion.identity;
                 Text.transform.localScale = Vector3.one;
-                Text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+                try
+                {
+                    Text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+                }
+                catch (Exception)
+                {
+                    Text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+                }
                 Text.alignment = TextAnchor.MiddleCenter;
                 Text.color = Color.black;
             }
@@ -251,7 +258,7 @@ namespace AvatarGoVR
             }
             Debug.Assert(AnimationProviders.Count > 0, "No animation providers were created");
         }
-        
+
         private void EnableAvatar(GameObject avatar)
         {
             avatar.SetActive(true);
