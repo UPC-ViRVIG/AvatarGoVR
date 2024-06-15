@@ -1,11 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO.Pipes;
 using Unity.Mathematics;
-using Unity.XR.CoreUtils;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace FBIK
 {
@@ -13,8 +8,11 @@ namespace FBIK
     {
         /// <summary>
         /// Solve CCD for the last joint of the chain (joints array)
+        /// minDegrees and maxDegrees are only provided as an intuitive way to limit the rotation of the joints
+        /// but do not expect the joint to be exactly within these limits after solving
         /// </summary>
-        public static void Solve(float3 target, Span<Transform> joints, Span<float> weights, float3 rotAxis, int numberIterations = 5)
+        public static void Solve(float3 target, Span<Transform> joints, Span<float> weights, float3 rotAxis,
+                                 int numberIterations = 5, float minDegrees = -180.0f, float maxDegrees = 180.0f)
         {
             if (joints.Length != weights.Length)
                 throw new ArgumentException("joints and weights must have the same length.");
@@ -23,6 +21,9 @@ namespace FBIK
 
             if (math.distancesq(endEffector.position, target) < 0.001f)
                 return;
+
+            float minRotDeg = math.radians(minDegrees);
+            float maxRotDeg = math.radians(maxDegrees);
 
             for (int it = 0; it < numberIterations; ++it)
             {
@@ -35,6 +36,11 @@ namespace FBIK
                     float3 eeJointUnit = math.normalize(eeJoint);
                     float3 targetJointUnit = math.normalize(targetJoint);
                     quaternion rot = MathExtensions.FromToRotation(eeJointUnit, targetJointUnit);
+                    // constain rot by a maximum angle
+                    MathExtensions.ToAxisAngle(rot, out float3 axis, out float angle);
+                    angle = math.clamp(angle, minRotDeg, maxRotDeg);
+                    rot = quaternion.AxisAngle(axis, angle);
+                    // apply rotation
                     rot = MathExtensions.ScaleRotation(rot, weight);  // Assuming ScaleRotation scales the quaternion angle by weight
                     joint.rotation = math.mul(rot, joint.rotation);
                     float3 rotatedAxis = math.mul(rot, rotAxis);

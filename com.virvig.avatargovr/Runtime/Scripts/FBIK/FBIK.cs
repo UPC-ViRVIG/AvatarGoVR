@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
@@ -163,8 +162,8 @@ namespace FBIK
             // Translate Spine
             float3 hipsTargetRight = math.mul(hipsTarget.Rotation, math.right());
             float3 hipsTargetForward = math.mul(hipsTarget.Rotation, math.forward());
-            CCD.Solve(headTargetPos, SpineChain, SpineWeights, hipsTargetRight);
-            CCD.Solve(headTargetPos, SpineChain, SpineWeights, hipsTargetForward);
+            CCD.Solve(headTargetPos, SpineChain, SpineWeights, hipsTargetRight, minDegrees: -15.0f, maxDegrees: 15.0f);
+            CCD.Solve(headTargetPos, SpineChain, SpineWeights, hipsTargetForward, minDegrees: -8.0f, maxDegrees: 8.0f);
             // Rotate Head (force always look at the target head)
             Head.rotation = math.mul(headTarget.Rotation, InitHead);
         }
@@ -185,8 +184,8 @@ namespace FBIK
             // Rotate Spine with the Head
             // RotationChainIK.Solve(hipsTarget.Rotation, headTarget.Rotation, SpineChain, InitSpineChain, false, true);
             // Translate Spine
-            CCD.Solve(headTargetPos, SpineChain, SpineWeights, hipsTargetRight);
-            CCD.Solve(headTargetPos, SpineChain, SpineWeights, hipsTargetForward);
+            CCD.Solve(headTargetPos, SpineChain, SpineWeights, hipsTargetRight, minDegrees: -15.0f, maxDegrees: 15.0f);
+            CCD.Solve(headTargetPos, SpineChain, SpineWeights, hipsTargetForward, minDegrees: -8.0f, maxDegrees: 8.0f);
             // Rotate Head (force always look at the target head)
             Head.rotation = math.mul(headTarget.Rotation, InitHead);
         }
