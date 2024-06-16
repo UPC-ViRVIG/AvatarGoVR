@@ -42,3 +42,8 @@ If you find our research useful, please cite our papers:
     DOI = {10.2312/egs.20221037}
 }
 ```
+
+## License
+
+This work is licensed under CC BY-NC-SA 4.0.
+The project and data is freely available for free non-commercial use, and may be redistributed under these conditions. Please, see the [license](LICENSE) for further details.
