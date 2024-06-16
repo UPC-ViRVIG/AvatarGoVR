@@ -6,7 +6,7 @@
 
 3. Insert the following URL into the git URL field and click **Add**:
 	```
-	https://github.com/UPC-ViRVIG/AvatarGoVR.git?path=/com.virvig.avatargovr
+	https://github.com/UPC-ViRVIG/AvatarGoVR.git?path=/com.virvig.avatargovr#xr4ed
 	```
  
 4. *[Optional]* In the Package Manager, click on **AvatarGoVR**, then import the example scenes by selecting **Samples > Examples > Import**.
