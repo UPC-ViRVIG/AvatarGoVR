@@ -1,6 +1,6 @@
 {
   "name": "com.virvig.avatargovr",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "displayName": "AvatarGoVR",
   "description": "Virtual reality avatars animated from any configuration of devices.",
   "unity": "2020.1",
