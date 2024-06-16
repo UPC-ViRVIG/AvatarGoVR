@@ -2,7 +2,7 @@
   "name": "com.virvig.avatargovr",
   "version": "0.0.2",
   "displayName": "AvatarGoVR",
-  "description": "Virtual reality avatars animated from any configuration of devices.",
+  "description": "XR4ED virtual reality avatars animated from any configuration of devices.",
   "unity": "2020.1",
   "documentationUrl": "https://github.com/UPC-ViRVIG/AvatarGoVR",
   "changelogUrl": "https://github.com/UPC-ViRVIG/AvatarGoVR",
