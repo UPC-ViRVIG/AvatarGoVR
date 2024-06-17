@@ -162,8 +162,8 @@ namespace FBIK
             // Translate Spine
             float3 hipsTargetRight = math.mul(hipsTarget.Rotation, math.right());
             float3 hipsTargetForward = math.mul(hipsTarget.Rotation, math.forward());
-            CCD.Solve(headTargetPos, SpineChain, SpineWeights, hipsTargetRight, minDegrees: -15.0f, maxDegrees: 15.0f);
-            CCD.Solve(headTargetPos, SpineChain, SpineWeights, hipsTargetForward, minDegrees: -8.0f, maxDegrees: 8.0f);
+            CCD.Solve(headTargetPos, headTarget.Position, SpineChain, SpineWeights, hipsTargetRight, SpineLength, minDegrees: -15.0f, maxDegrees: 15.0f);
+            CCD.Solve(headTargetPos, headTarget.Position, SpineChain, SpineWeights, hipsTargetForward, SpineLength, minDegrees: -8.0f, maxDegrees: 8.0f);
             // Rotate Head (force always look at the target head)
             Head.rotation = math.mul(headTarget.Rotation, InitHead);
         }
@@ -176,7 +176,7 @@ namespace FBIK
             float headToRightHand = math.distance((float3)Head.position, rightHandTarget.Position);
             float leftFactor = math.clamp((headToLeftHand - HeadToLeftArmLength) / HeadToLeftArmLength, 0.0f, 1.0f) * maxPercentageHeadToArmLength;
             float rightFactor = math.clamp((headToRightHand - HeadToRightArmLength) / HeadToRightArmLength, 0.0f, 1.0f) * maxPercentageHeadToArmLength;
-            headTargetPos = headTargetPos * (1.0f - leftFactor - rightFactor) + leftHandTarget.Position * leftFactor + rightHandTarget.Position * rightFactor;
+            float3 targetPos = headTargetPos * (1.0f - leftFactor - rightFactor) + leftHandTarget.Position * leftFactor + rightHandTarget.Position * rightFactor;
             float3 hipsTargetRight = math.mul(hipsTarget.Rotation, math.right());
             float3 hipsTargetUp = math.mul(hipsTarget.Rotation, math.up());
             float3 hipsTargetForward = math.mul(hipsTarget.Rotation, math.forward());
@@ -184,8 +184,8 @@ namespace FBIK
             // Rotate Spine with the Head
             // RotationChainIK.Solve(hipsTarget.Rotation, headTarget.Rotation, SpineChain, InitSpineChain, false, true);
             // Translate Spine
-            CCD.Solve(headTargetPos, SpineChain, SpineWeights, hipsTargetRight, minDegrees: -15.0f, maxDegrees: 15.0f);
-            CCD.Solve(headTargetPos, SpineChain, SpineWeights, hipsTargetForward, minDegrees: -8.0f, maxDegrees: 8.0f);
+            CCD.Solve(targetPos, headTarget.Position, SpineChain, SpineWeights, hipsTargetRight, SpineLength, minDegrees: -15.0f, maxDegrees: 15.0f);
+            CCD.Solve(targetPos, headTarget.Position, SpineChain, SpineWeights, hipsTargetForward, SpineLength, minDegrees: -8.0f, maxDegrees: 8.0f);
             // Rotate Head (force always look at the target head)
             Head.rotation = math.mul(headTarget.Rotation, InitHead);
         }

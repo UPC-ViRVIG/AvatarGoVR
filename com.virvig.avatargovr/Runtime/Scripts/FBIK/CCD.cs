@@ -11,7 +11,7 @@ namespace FBIK
         /// minDegrees and maxDegrees are only provided as an intuitive way to limit the rotation of the joints
         /// but do not expect the joint to be exactly within these limits after solving
         /// </summary>
-        public static void Solve(float3 target, Span<Transform> joints, Span<float> weights, float3 rotAxis,
+        public static void Solve(float3 target, float3 headTargetPos, Span<Transform> joints, Span<float> weights, float3 rotAxis, float spineLength,
                                  int numberIterations = 5, float minDegrees = -180.0f, float maxDegrees = 180.0f)
         {
             if (joints.Length != weights.Length)
@@ -22,6 +22,14 @@ namespace FBIK
             if (math.distancesq(endEffector.position, target) < 0.001f)
                 return;
 
+            // The closer the target to the spine vector, the less rotation should be applied
+            float3 headTargetSpine = headTargetPos - (float3)joints[0].position;
+            float3 spineVector = math.normalize(endEffector.position - joints[0].position);
+            float3 projectedHeadTargetSpine = math.dot(headTargetSpine, spineVector) * spineVector;
+            float headToSpineDistance = math.length(headTargetSpine - projectedHeadTargetSpine);
+            float targetSpineFactor = math.clamp((headToSpineDistance / spineLength) - spineLength * 0.1f, 0.0f, 1.0f);
+            targetSpineFactor = math.pow(targetSpineFactor, 2.0f);
+
             float minRotDeg = math.radians(minDegrees);
             float maxRotDeg = math.radians(maxDegrees);
 
@@ -30,7 +38,7 @@ namespace FBIK
                 for (int i = joints.Length - 2; i >= 0; --i)
                 {
                     Transform joint = joints[i];
-                    float weight = weights[i];
+                    float weight = weights[i] * targetSpineFactor;
                     float3 eeJoint = endEffector.position - joint.position;
                     float3 targetJoint = target - (float3)joint.position;
                     float3 eeJointUnit = math.normalize(eeJoint);
