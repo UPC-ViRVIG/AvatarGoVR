@@ -11,7 +11,7 @@ namespace FBIK
         /// minDegrees and maxDegrees are only provided as an intuitive way to limit the rotation of the joints
         /// but do not expect the joint to be exactly within these limits after solving
         /// </summary>
-        public static void Solve(float3 target, float3 headTargetPos, Span<Transform> joints, Span<float> weights, float3 rotAxis, float spineLength,
+        public static void Solve(float3 target, float3 headTargetPos, float leftRightFactor, Span<Transform> joints, Span<float> weights, float3 rotAxis, float spineLength,
                                  int numberIterations = 5, float minDegrees = -180.0f, float maxDegrees = 180.0f)
         {
             if (joints.Length != weights.Length)
@@ -29,6 +29,7 @@ namespace FBIK
             float headToSpineDistance = math.length(headTargetSpine - projectedHeadTargetSpine);
             float targetSpineFactor = math.clamp((headToSpineDistance / spineLength) - spineLength * 0.1f, 0.0f, 1.0f);
             targetSpineFactor = math.pow(targetSpineFactor, 2.0f);
+            targetSpineFactor = math.clamp(targetSpineFactor + leftRightFactor * 2, 0.0f, 1.0f);
 
             float minRotDeg = math.radians(minDegrees);
             float maxRotDeg = math.radians(maxDegrees);
