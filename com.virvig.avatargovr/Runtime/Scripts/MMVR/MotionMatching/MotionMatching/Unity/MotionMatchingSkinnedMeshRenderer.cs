@@ -145,18 +145,18 @@ namespace MotionMatching
             MotionMatching.GetWorldPosAndRot(MotionMatching.GetSkeletonTransforms()[1], out float3 hipsPos, out _);
             TargetBones[0].position = hipsPos;
             // Correct Toe if under ground
-            Transform leftToes = Animator.GetBoneTransform(HumanBodyBones.LeftToes);
-            if (leftToes.position.y < 0.0f)
-            {
-                Transform leftFoot = Animator.GetBoneTransform(HumanBodyBones.LeftFoot);
-                CorrectToes(leftToes, leftFoot);
-            }
-            Transform rightToes = Animator.GetBoneTransform(HumanBodyBones.RightToes);
-            if (rightToes.position.y < 0.0f)
-            {
-                Transform rightFoot = Animator.GetBoneTransform(HumanBodyBones.RightFoot);
-                CorrectToes(rightToes, rightFoot);
-            }
+            //Transform leftToes = Animator.GetBoneTransform(HumanBodyBones.LeftToes);
+            //if (leftToes.position.y < 0.0f)
+            //{
+            //    Transform leftFoot = Animator.GetBoneTransform(HumanBodyBones.LeftFoot);
+            //    CorrectToes(leftToes, leftFoot);
+            //}
+            //Transform rightToes = Animator.GetBoneTransform(HumanBodyBones.RightToes);
+            //if (rightToes.position.y < 0.0f)
+            //{
+            //    Transform rightFoot = Animator.GetBoneTransform(HumanBodyBones.RightFoot);
+            //    CorrectToes(rightToes, rightFoot);
+            //}
         }
 
         private void CorrectToes(Transform toesT, Transform footT)
