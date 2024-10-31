@@ -129,6 +129,7 @@ namespace AvatarGoVR
                        new Target(rFootPos, rFootRot));
         }
 
+
         public void Dispose() { }
 
         private readonly HumanBodyBones[] HumanTopology = new HumanBodyBones[]

@@ -16,7 +16,7 @@ namespace MotionMatching
     {
         public event Action OnSkeletonTransformUpdated;
 
-        public FullBodyDataDrivenAvatar Avatar;
+        public float EyesHeight;
         public MotionMatchingCharacterController CharacterController;
         public MotionMatchingData MMData;
         public SquatDataset[] SquatDatasets;
@@ -30,6 +30,8 @@ namespace MotionMatching
         [Tooltip("How important is the trajectory (future positions + future directions)")][Range(0.0f, 1.0f)] public float Responsiveness = 1.0f;
         [Tooltip("How important is the current pose")][Range(0.0f, 1.0f)] public float Quality = 1.0f;
         public float[] FeatureWeights;
+
+        public float CurrentHeadHeight;
 
 
         public float3 Velocity { get; private set; }
@@ -217,8 +219,8 @@ namespace MotionMatching
             {
                 // Determine squat level
                 int prevSquatIndex = SquatIndex;
-                AvatarManager.Instance.GetDeviceManager().GetDevicePose(DeviceManager.DeviceRole.Head, out Vector3 hmdPos, out _);
-                float heightPercentage = hmdPos.y / Avatar.EyesHeight;
+                //AvatarManager.Instance.GetDeviceManager().GetDevicePose(DeviceManager.DeviceRole.Head, out Vector3 hmdPos, out _);
+                float heightPercentage = CurrentHeadHeight / EyesHeight;
                 int newSquatIndex = 0;
                 for (int i = 0; i < SquatDatasets.Length; i++)
                 {

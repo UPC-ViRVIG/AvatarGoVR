@@ -20,7 +20,7 @@ namespace AvatarGoVR
 
         [Header("Avatar Scaling")]
         [Tooltip("Height of the eyes from the floor. Used to scale the avatar.")]
-        public float EyesHeight = 1.65f;
+        public float EyesHeight = 1.625f;
 
         [Header("Settings")]
         public bool DoArmStretch = true;

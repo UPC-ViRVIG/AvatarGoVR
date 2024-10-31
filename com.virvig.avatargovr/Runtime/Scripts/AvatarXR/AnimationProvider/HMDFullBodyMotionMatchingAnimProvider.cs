@@ -97,7 +97,7 @@ namespace AvatarGoVR
                 MotionMatchingController = new MotionMatchingController
                 {
                     MMData = FullBodyDataDrivenAvatar.MMData,
-                    Avatar = FullBodyDataDrivenAvatar,
+                    EyesHeight = FullBodyDataDrivenAvatar.EyesHeight,
                     SquatDatasets = FullBodyDataDrivenAvatar.MMDataSquat
                 };
                 MotionMatchingController.Init();
