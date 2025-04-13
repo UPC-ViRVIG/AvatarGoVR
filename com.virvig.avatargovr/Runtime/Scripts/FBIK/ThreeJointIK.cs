@@ -64,8 +64,8 @@ namespace FBIK
             float3 rotationAxisACAT = math.normalize(math.cross(axisAC, axisAT));
             quaternion rotA2 = quaternion.AxisAngle(math.mul(math.inverse(jointA.rotation), rotationAxisACAT), angleACAT);
             // Apply the rotations
-            jointA.rotation = math.mul(jointA.rotation, math.mul(rotA2, rotA));
-            jointB.rotation = math.mul(jointB.rotation, rotB);
+            jointA.localRotation = math.mul(jointA.localRotation, math.mul(rotA, rotA2));
+            jointB.localRotation = math.mul(jointB.localRotation, rotB);
         }
 
         private static float GetLengthAT(float3 targetPos, float3 aPos, float lengthAB, float lengthBC)
